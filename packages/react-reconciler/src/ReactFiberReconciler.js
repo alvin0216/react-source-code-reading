@@ -7,7 +7,7 @@
  * @flow
  */
 
-import {enableNewReconciler} from 'shared/ReactFeatureFlags';
+import { enableNewReconciler } from 'shared/ReactFeatureFlags';
 
 // The entry file imports either the old or new version of the reconciler.
 // During build and testing, this indirection is always shimmed with the actual
@@ -94,43 +94,19 @@ import {
   getCurrentUpdateLanePriority as getCurrentUpdateLanePriority_new,
 } from './ReactFiberReconciler.new';
 
-export const createContainer = enableNewReconciler
-  ? createContainer_new
-  : createContainer_old;
-export const updateContainer = enableNewReconciler
-  ? updateContainer_new
-  : updateContainer_old;
-export const batchedEventUpdates = enableNewReconciler
-  ? batchedEventUpdates_new
-  : batchedEventUpdates_old;
-export const batchedUpdates = enableNewReconciler
-  ? batchedUpdates_new
-  : batchedUpdates_old;
-export const unbatchedUpdates = enableNewReconciler
-  ? unbatchedUpdates_new
-  : unbatchedUpdates_old;
-export const deferredUpdates = enableNewReconciler
-  ? deferredUpdates_new
-  : deferredUpdates_old;
-export const discreteUpdates = enableNewReconciler
-  ? discreteUpdates_new
-  : discreteUpdates_old;
-export const flushDiscreteUpdates = enableNewReconciler
-  ? flushDiscreteUpdates_new
-  : flushDiscreteUpdates_old;
-export const flushControlled = enableNewReconciler
-  ? flushControlled_new
-  : flushControlled_old;
+export const createContainer = enableNewReconciler ? createContainer_new : createContainer_old;
+export const updateContainer = enableNewReconciler ? updateContainer_new : updateContainer_old;
+export const batchedEventUpdates = enableNewReconciler ? batchedEventUpdates_new : batchedEventUpdates_old;
+export const batchedUpdates = enableNewReconciler ? batchedUpdates_new : batchedUpdates_old;
+export const unbatchedUpdates = enableNewReconciler ? unbatchedUpdates_new : unbatchedUpdates_old;
+export const deferredUpdates = enableNewReconciler ? deferredUpdates_new : deferredUpdates_old;
+export const discreteUpdates = enableNewReconciler ? discreteUpdates_new : discreteUpdates_old;
+export const flushDiscreteUpdates = enableNewReconciler ? flushDiscreteUpdates_new : flushDiscreteUpdates_old;
+export const flushControlled = enableNewReconciler ? flushControlled_new : flushControlled_old;
 export const flushSync = enableNewReconciler ? flushSync_new : flushSync_old;
-export const flushPassiveEffects = enableNewReconciler
-  ? flushPassiveEffects_new
-  : flushPassiveEffects_old;
-export const IsThisRendererActing = enableNewReconciler
-  ? IsThisRendererActing_new
-  : IsThisRendererActing_old;
-export const getPublicRootInstance = enableNewReconciler
-  ? getPublicRootInstance_new
-  : getPublicRootInstance_old;
+export const flushPassiveEffects = enableNewReconciler ? flushPassiveEffects_new : flushPassiveEffects_old;
+export const IsThisRendererActing = enableNewReconciler ? IsThisRendererActing_new : IsThisRendererActing_old;
+export const getPublicRootInstance = enableNewReconciler ? getPublicRootInstance_new : getPublicRootInstance_old;
 export const attemptSynchronousHydration = enableNewReconciler
   ? attemptSynchronousHydration_new
   : attemptSynchronousHydration_old;
@@ -146,60 +122,34 @@ export const attemptHydrationAtCurrentPriority = enableNewReconciler
 export const getCurrentUpdateLanePriority = enableNewReconciler
   ? getCurrentUpdateLanePriority_new
   : getCurrentUpdateLanePriority_old;
-export const findHostInstance = enableNewReconciler
-  ? findHostInstance_new
-  : findHostInstance_old;
+export const findHostInstance = enableNewReconciler ? findHostInstance_new : findHostInstance_old;
 export const findHostInstanceWithWarning = enableNewReconciler
   ? findHostInstanceWithWarning_new
   : findHostInstanceWithWarning_old;
 export const findHostInstanceWithNoPortals = enableNewReconciler
   ? findHostInstanceWithNoPortals_new
   : findHostInstanceWithNoPortals_old;
-export const shouldSuspend = enableNewReconciler
-  ? shouldSuspend_new
-  : shouldSuspend_old;
-export const injectIntoDevTools = enableNewReconciler
-  ? injectIntoDevTools_new
-  : injectIntoDevTools_old;
+export const shouldSuspend = enableNewReconciler ? shouldSuspend_new : shouldSuspend_old;
+export const injectIntoDevTools = enableNewReconciler ? injectIntoDevTools_new : injectIntoDevTools_old;
 export const act = enableNewReconciler ? act_new : act_old;
-export const createPortal = enableNewReconciler
-  ? createPortal_new
-  : createPortal_old;
-export const createComponentSelector = enableNewReconciler
-  ? createComponentSelector_new
-  : createComponentSelector_old;
+export const createPortal = enableNewReconciler ? createPortal_new : createPortal_old;
+export const createComponentSelector = enableNewReconciler ? createComponentSelector_new : createComponentSelector_old;
 
 //TODO: "psuedo" is spelled "pseudo"
 export const createHasPsuedoClassSelector = enableNewReconciler
   ? createHasPsuedoClassSelector_new
   : createHasPsuedoClassSelector_old;
-export const createRoleSelector = enableNewReconciler
-  ? createRoleSelector_new
-  : createRoleSelector_old;
-export const createTextSelector = enableNewReconciler
-  ? createTextSelector_new
-  : createTextSelector_old;
-export const createTestNameSelector = enableNewReconciler
-  ? createTestNameSelector_new
-  : createTestNameSelector_old;
+export const createRoleSelector = enableNewReconciler ? createRoleSelector_new : createRoleSelector_old;
+export const createTextSelector = enableNewReconciler ? createTextSelector_new : createTextSelector_old;
+export const createTestNameSelector = enableNewReconciler ? createTestNameSelector_new : createTestNameSelector_old;
 export const getFindAllNodesFailureDescription = enableNewReconciler
   ? getFindAllNodesFailureDescription_new
   : getFindAllNodesFailureDescription_old;
-export const findAllNodes = enableNewReconciler
-  ? findAllNodes_new
-  : findAllNodes_old;
-export const findBoundingRects = enableNewReconciler
-  ? findBoundingRects_new
-  : findBoundingRects_old;
-export const focusWithin = enableNewReconciler
-  ? focusWithin_new
-  : focusWithin_old;
-export const observeVisibleRects = enableNewReconciler
-  ? observeVisibleRects_new
-  : observeVisibleRects_old;
+export const findAllNodes = enableNewReconciler ? findAllNodes_new : findAllNodes_old;
+export const findBoundingRects = enableNewReconciler ? findBoundingRects_new : findBoundingRects_old;
+export const focusWithin = enableNewReconciler ? focusWithin_new : focusWithin_old;
+export const observeVisibleRects = enableNewReconciler ? observeVisibleRects_new : observeVisibleRects_old;
 export const registerMutableSourceForHydration = enableNewReconciler
   ? registerMutableSourceForHydration_new
   : registerMutableSourceForHydration_old;
-export const runWithPriority = enableNewReconciler
-  ? runWithPriority_new
-  : runWithPriority_old;
+export const runWithPriority = enableNewReconciler ? runWithPriority_new : runWithPriority_old;

@@ -7,14 +7,11 @@
  * @flow
  */
 
-import type {DOMEventName} from '../events/DOMEventNames';
-import type {ReactScopeInstance} from 'shared/ReactTypes';
-import type {
-  ReactDOMEventHandle,
-  ReactDOMEventHandleListener,
-} from '../shared/ReactDOMTypes';
+import type { DOMEventName } from '../events/DOMEventNames';
+import type { ReactScopeInstance } from 'shared/ReactTypes';
+import type { ReactDOMEventHandle, ReactDOMEventHandleListener } from '../shared/ReactDOMTypes';
 
-import {allNativeEvents} from '../events/EventRegistry';
+import { allNativeEvents } from '../events/EventRegistry';
 import {
   getClosestInstanceFromNode,
   getEventHandlerListeners,
@@ -23,17 +20,13 @@ import {
   doesTargetHaveEventHandle,
   addEventHandleToTarget,
 } from './ReactDOMComponentTree';
-import {ELEMENT_NODE, COMMENT_NODE} from '../shared/HTMLNodeType';
-import {listenToNativeEvent} from '../events/DOMPluginEventSystem';
+import { ELEMENT_NODE, COMMENT_NODE } from '../shared/HTMLNodeType';
+import { listenToNativeEvent } from '../events/DOMPluginEventSystem';
 
-import {HostRoot, HostPortal} from 'react-reconciler/src/ReactWorkTags';
-import {IS_EVENT_HANDLE_NON_MANAGED_NODE} from '../events/EventSystemFlags';
+import { HostRoot, HostPortal } from 'react-reconciler/src/ReactWorkTags';
+import { IS_EVENT_HANDLE_NON_MANAGED_NODE } from '../events/EventSystemFlags';
 
-import {
-  enableScopeAPI,
-  enableCreateEventHandleAPI,
-  enableEagerRootListeners,
-} from 'shared/ReactFeatureFlags';
+import { enableScopeAPI, enableCreateEventHandleAPI, enableEagerRootListeners } from 'shared/ReactFeatureFlags';
 import invariant from 'shared/invariant';
 
 type EventHandleOptions = {|
@@ -64,7 +57,7 @@ function isReactScope(target: EventTarget | ReactScopeInstance): boolean {
 function createEventHandleListener(
   type: DOMEventName,
   isCapturePhaseListener: boolean,
-  callback: (SyntheticEvent<EventTarget>) => void,
+  callback: (SyntheticEvent<EventTarget>) => void
 ): ReactDOMEventHandleListener {
   return {
     callback,
@@ -77,7 +70,7 @@ function registerEventOnNearestTargetContainer(
   targetFiber: Fiber,
   domEventName: DOMEventName,
   isCapturePhaseListener: boolean,
-  targetElement: Element | null,
+  targetElement: Element | null
 ): void {
   if (!enableEagerRootListeners) {
     // If it is, find the nearest root or portal and make it
@@ -87,7 +80,7 @@ function registerEventOnNearestTargetContainer(
       if (__DEV__) {
         console.error(
           'ReactDOM.createEventHandle: setListener called on an target ' +
-            'that did not have a corresponding root. This is likely a bug in React.',
+            'that did not have a corresponding root. This is likely a bug in React.'
         );
       }
       return;
@@ -95,19 +88,14 @@ function registerEventOnNearestTargetContainer(
     if (targetContainer.nodeType === COMMENT_NODE) {
       targetContainer = ((targetContainer.parentNode: any): Element);
     }
-    listenToNativeEvent(
-      domEventName,
-      isCapturePhaseListener,
-      targetContainer,
-      targetElement,
-    );
+    listenToNativeEvent(domEventName, isCapturePhaseListener, targetContainer, targetElement);
   }
 }
 
 function registerReactDOMEvent(
   target: EventTarget | ReactScopeInstance,
   domEventName: DOMEventName,
-  isCapturePhaseListener: boolean,
+  isCapturePhaseListener: boolean
 ): void {
   // Check if the target is a DOM element.
   if ((target: any).nodeType === ELEMENT_NODE) {
@@ -119,17 +107,12 @@ function registerReactDOMEvent(
         if (__DEV__) {
           console.error(
             'ReactDOM.createEventHandle: setListener called on an element ' +
-              'target that is not managed by React. Ensure React rendered the DOM element.',
+              'target that is not managed by React. Ensure React rendered the DOM element.'
           );
         }
         return;
       }
-      registerEventOnNearestTargetContainer(
-        targetFiber,
-        domEventName,
-        isCapturePhaseListener,
-        targetElement,
-      );
+      registerEventOnNearestTargetContainer(targetFiber, domEventName, isCapturePhaseListener, targetElement);
     }
   } else if (enableScopeAPI && isReactScope(target)) {
     if (!enableEagerRootListeners) {
@@ -139,37 +122,23 @@ function registerReactDOMEvent(
         // Scope is unmounted, do not proceed.
         return;
       }
-      registerEventOnNearestTargetContainer(
-        targetFiber,
-        domEventName,
-        isCapturePhaseListener,
-        null,
-      );
+      registerEventOnNearestTargetContainer(targetFiber, domEventName, isCapturePhaseListener, null);
     }
   } else if (isValidEventTarget(target)) {
     const eventTarget = ((target: any): EventTarget);
     // These are valid event targets, but they are also
     // non-managed React nodes.
-    listenToNativeEvent(
-      domEventName,
-      isCapturePhaseListener,
-      eventTarget,
-      null,
-      IS_EVENT_HANDLE_NON_MANAGED_NODE,
-    );
+    listenToNativeEvent(domEventName, isCapturePhaseListener, eventTarget, null, IS_EVENT_HANDLE_NON_MANAGED_NODE);
   } else {
     invariant(
       false,
       'ReactDOM.createEventHandle: setter called on an invalid ' +
-        'target. Provide a valid EventTarget or an element managed by React.',
+        'target. Provide a valid EventTarget or an element managed by React.'
     );
   }
 }
 
-export function createEventHandle(
-  type: string,
-  options?: EventHandleOptions,
-): ReactDOMEventHandle {
+export function createEventHandle(type: string, options?: EventHandleOptions): ReactDOMEventHandle {
   if (enableCreateEventHandleAPI) {
     const domEventName = ((type: any): DOMEventName);
 
@@ -185,7 +154,7 @@ export function createEventHandle(
     invariant(
       allNativeEvents.has(domEventName),
       'Cannot call unstable_createEventHandle with "%s", as it is not an event known to React.',
-      domEventName,
+      domEventName
     );
 
     let isCapturePhaseListener = false;
@@ -196,24 +165,16 @@ export function createEventHandle(
       }
     }
 
-    const eventHandle = (
-      target: EventTarget | ReactScopeInstance,
-      callback: (SyntheticEvent<EventTarget>) => void,
-    ) => {
+    const eventHandle = (target: EventTarget | ReactScopeInstance, callback: (SyntheticEvent<EventTarget>) => void) => {
       invariant(
         typeof callback === 'function',
-        'ReactDOM.createEventHandle: setter called with an invalid ' +
-          'callback. The callback must be a function.',
+        'ReactDOM.createEventHandle: setter called with an invalid ' + 'callback. The callback must be a function.'
       );
       if (!doesTargetHaveEventHandle(target, eventHandle)) {
         addEventHandleToTarget(target, eventHandle);
         registerReactDOMEvent(target, domEventName, isCapturePhaseListener);
       }
-      const listener = createEventHandleListener(
-        domEventName,
-        isCapturePhaseListener,
-        callback,
-      );
+      const listener = createEventHandleListener(domEventName, isCapturePhaseListener, callback);
       let targetListeners = getEventHandlerListeners(target);
       if (targetListeners === null) {
         targetListeners = new Set();
@@ -221,9 +182,7 @@ export function createEventHandle(
       }
       targetListeners.add(listener);
       return () => {
-        ((targetListeners: any): Set<ReactDOMEventHandleListener>).delete(
-          listener,
-        );
+        ((targetListeners: any): Set<ReactDOMEventHandleListener>).delete(listener);
       };
     };
 
